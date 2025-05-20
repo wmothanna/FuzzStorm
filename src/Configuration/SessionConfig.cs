@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace FuzzStorm.Models.Configuration;
+namespace FuzzStorm.Configuration;
 internal class SessionConfig // in-memory representation of end-user configuration
 {
     public string? Method { get; set; }
