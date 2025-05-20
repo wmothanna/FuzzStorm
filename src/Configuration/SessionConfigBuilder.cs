@@ -26,7 +26,7 @@ internal class SessionConfigBuilder
         catch { throw; }
         return this;
     }
-    public SessionConfigBuilder WithVersion(string? version)
+    public SessionConfigBuilder WithVersion(string version)
     {
         try
         {
@@ -36,7 +36,7 @@ internal class SessionConfigBuilder
         catch { throw; }
         return this;
     }
-    public SessionConfigBuilder WithHeaders(IEnumerable<string> headers, bool useDefault)
+    public SessionConfigBuilder WithHeaders(IEnumerable<string> headers)
     {
         IEnumerable<string> defaultHeaders = new List<string>()
         {
@@ -45,7 +45,7 @@ internal class SessionConfigBuilder
             "User-Agent: FuzzStorm"
         };
 
-        var combinedHeaders = useDefault 
+        var combinedHeaders = _sessionConfig.UseDefaultHeaders
             ? defaultHeaders.Concat(headers ?? Enumerable.Empty<string>())
             : headers ?? Enumerable.Empty<string>();
 
@@ -55,7 +55,7 @@ internal class SessionConfigBuilder
                 _sessionConfig.Headers = result;
             else
             {
-                _sessionConfig.Headers = useDefault
+                _sessionConfig.Headers = _sessionConfig.UseDefaultHeaders
                 ? HeaderParser.ParseHeaders(defaultHeaders)
                 : new Dictionary<string, string>();
             }
@@ -63,7 +63,7 @@ internal class SessionConfigBuilder
         }
         catch { throw; }
     }
-    public SessionConfigBuilder WithBody(string? body)
+    public SessionConfigBuilder WithBody(string body)
     {
         if (DataValidator.ValidBody(body))
         _sessionConfig.Body = body;
@@ -82,10 +82,14 @@ internal class SessionConfigBuilder
         catch { throw; }
         return this;
     }
-    public SessionConfigBuilder AllowRedirects(bool? allow)
+    public SessionConfigBuilder AllowRedirects(bool allow = true)
     {
-        bool defaultVal = true;
-            _sessionConfig.AllowRedirects = allow ?? defaultVal;
+        _sessionConfig.AllowRedirects = allow;
+        return this;
+    }
+    public SessionConfigBuilder UseDefaultHeaders(bool use = true)
+    {
+        _sessionConfig.UseDefaultHeaders = use;
         return this;
     }
     public SessionConfigBuilder WithTimeout(TimeSpan timeout)
