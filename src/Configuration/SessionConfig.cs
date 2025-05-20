@@ -11,12 +11,13 @@ internal class SessionConfig // in-memory representation of end-user configurati
     public string? Body { get; set; }
     public WebProxy? Proxy { get; set; }
     public bool AllowRedirects { get; set; } = true;
+    public bool UseDefaultHeaders { get; set; } = true;
     public TimeSpan TimeoutInSeconds { get; set; }
     public TimeSpan DelayInSeconds { get; set; }
     public FuzzTarget FuzzTarget { get; set; }
     public string WordlistPath { get; set; } = null!;
     public string? TargetedHeader { get; set; }
-
+    public static readonly string FuzzKeyWord = "{FuzzKeyWord}";
     public SessionConfig ()
     {
         Method = "GET";
