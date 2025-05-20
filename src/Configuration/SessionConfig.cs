@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Dynamic;
+using System.Net;
 
 namespace FuzzStorm.Configuration;
 internal class SessionConfig // in-memory representation of end-user configuration
@@ -10,12 +11,19 @@ internal class SessionConfig // in-memory representation of end-user configurati
     public string? Body { get; set; }
     public WebProxy? Proxy { get; set; }
     public bool AllowRedirects { get; set; } = true;
-    public TimeSpan TimeoutInSeconds { get; set; } = TimeSpan.FromSeconds(10);
+    public TimeSpan TimeoutInSeconds { get; set; }
+    public TimeSpan DelayInSeconds { get; set; }
+    public FuzzTarget FuzzTarget { get; set; }
+    public string WordlistPath { get; set; } = null!;
+    public string? TargetedHeader { get; set; }
 
     public SessionConfig ()
     {
         Method = "GET";
         Version = HttpVersion.Version11.ToString();
+        TimeoutInSeconds = TimeSpan.FromSeconds(10);
+        DelayInSeconds = TimeSpan.FromSeconds(0);
+        FuzzTarget = FuzzTarget.None;
     }
 
     public bool HasContent()

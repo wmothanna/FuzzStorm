@@ -94,6 +94,31 @@ internal class SessionConfigBuilder
         return this;
     }
 
+    public SessionConfigBuilder WithDelay(TimeSpan? delay)
+    {
+        _sessionConfig.DelayInSeconds = delay ?? TimeSpan.FromSeconds(0);
+        return this;
+    }
+    public SessionConfigBuilder WithFuzzTarget(FuzzTarget target)
+    {
+        _sessionConfig.FuzzTarget = target;
+        return this;
+    }
+    public SessionConfigBuilder WithWordlist(string path, out WordlistErr err)
+    {
+        err = WordlistErr.None;
+
+        if (!File.Exists(path))
+            err = WordlistErr.NotFound; 
+            
+        _sessionConfig.WordlistPath = path;
+        return this;
+    }
+    public SessionConfigBuilder SetTargetedHeader(string? header) {
+        _sessionConfig.TargetedHeader = header;
+        return this;
+    }
+
     public SessionConfigBuilder Reset()
     {
         _sessionConfig = new();
