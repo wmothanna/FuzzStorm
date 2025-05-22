@@ -14,11 +14,11 @@ internal class SessionConfigBuilder
 
         return this;
     }
-    public SessionConfigBuilder WithUrl(string url, out UrlErr urlErr)
+    public SessionConfigBuilder WithUrl(string url, ref UrlErr urlErr)
     {
         try
         {
-        if (DataValidator.ValidUrl(url, out urlErr, out Uri? result) && result is not null)
+        if (DataValidator.ValidUrl(url, ref urlErr, out Uri? result) && result is not null)
         {
             _sessionConfig.Url = result.ToString();
         }
@@ -70,7 +70,7 @@ internal class SessionConfigBuilder
 
         return this;
     }
-    public SessionConfigBuilder SetProxy(string? proxyAddr)
+    public SessionConfigBuilder WithProxy(string? proxyAddr)
     {
         try
         {
@@ -118,7 +118,7 @@ internal class SessionConfigBuilder
         _sessionConfig.WordlistPath = path;
         return this;
     }
-    public SessionConfigBuilder SetTargetedHeader(string? header) {
+    public SessionConfigBuilder WithTargetedHeader(string? header) {
         _sessionConfig.TargetedHeader = header;
         return this;
     }

@@ -13,28 +13,21 @@ static class DataValidator
     }
     return false;
   }
-  public static bool ValidUrl(string uri){
-    return ValidUrl(uri, out UrlErr uriErr, out Uri? result);
-  }
-  public static bool ValidUrl(string uri, out UrlErr uriErr){
-    return ValidUrl(uri, out uriErr, out Uri? result);
-  }
-  public static bool ValidUrl(string uri, out UrlErr uriErr, out Uri? result){
-    uriErr = UrlErr.None;
+  public static bool ValidUrl(string url, ref UrlErr urlErr, out Uri? result){
     try
     {
-      if (Uri.TryCreate(uri, UriKind.Absolute, out result) && result is not null)
+      if (Uri.TryCreate(url, UriKind.Absolute, out result) && result is not null)
       {
         if
         (
           result.Scheme != Uri.UriSchemeHttp
           && result.Scheme != Uri.UriSchemeHttps
         )
-        { uriErr = UrlErr.InvalidScheme; }
+        { urlErr = UrlErr.InvalidScheme; }
         else
         { return true; }
       }
-      else { uriErr = UrlErr.InvalidUri; }
+      else { urlErr = UrlErr.InvalidUri; }
       return false;
     }
     catch { throw; }
@@ -42,22 +35,10 @@ static class DataValidator
   public static bool ValidVersion(string? versionStr, out Version? version){
     try
     {
-      if
-      (
+      return (
         Version.TryParse(versionStr, out version!)
         && version is not null
-      )
-      {
-        if
-        (
-          version.Equals(HttpVersion.Version10)
-          || version.Equals(HttpVersion.Version11)
-          || version.Equals(HttpVersion.Version20)
-          || version.Equals(HttpVersion.Version30)
-        )
-        { return true; }
-      }
-      return false;
+      );
     }
     catch { throw; }
   }
