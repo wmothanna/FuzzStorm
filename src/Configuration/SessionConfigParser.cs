@@ -35,7 +35,7 @@ internal static class SessionConfigParser
 
         UrlErr urlErr = UrlErr.None;
 
-        builder.WithUrl(url, out urlErr);
+        builder.WithUrl(url, ref urlErr);
 
         if (urlErr != UrlErr.None)
         {
@@ -159,7 +159,6 @@ internal static class SessionConfigParser
                 Environment.Exit(0);
             }
         );
-
 
         return sessionConfigBuilder.Build();
     }
