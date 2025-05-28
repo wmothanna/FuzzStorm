@@ -4,10 +4,10 @@ using System.Net;
 namespace FuzzStorm.Configuration;
 internal class SessionConfig // in-memory representation of end-user configuration
 {
-    public string? Method { get; set; }
+    public string Method { get; set; } = null!;
     public string Url { get; set; } = null!;
-    public string? Version { get; set; }
-    public Dictionary<string, string>? Headers { get; set; }
+    public string Version { get; set; } = null!;
+    public Dictionary<string, string> Headers { get; set; } = null!;
     public string? Body { get; set; }
     public WebProxy? Proxy { get; set; }
     public bool AllowRedirects { get; set; } = true;
@@ -17,7 +17,7 @@ internal class SessionConfig // in-memory representation of end-user configurati
     public FuzzTarget FuzzTarget { get; set; }
     public string WordlistPath { get; set; } = null!;
     public string? TargetedHeader { get; set; }
-    public static readonly string FuzzKeyWord = "{FuzzKeyWord}";
+    public static readonly string FuzzKeyWord = "FuzzStorm";
     public SessionConfig ()
     {
         Method = "GET";

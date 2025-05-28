@@ -142,13 +142,11 @@ internal static class SessionConfigParser
         catch (ArgumentNullException ex)
         {
             Console.WriteLine(ex.ParamName + "\r\n");
-            Console.WriteLine(ex.StackTrace);
             Environment.Exit(0);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message + "\r\n");
-            Console.WriteLine(ex.StackTrace);
             Environment.Exit(0);
         }
 
