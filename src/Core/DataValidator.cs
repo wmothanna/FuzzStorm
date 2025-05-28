@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 
 namespace FuzzStorm.Core;
 static class DataValidator
@@ -9,6 +10,14 @@ static class DataValidator
     if (!string.IsNullOrEmpty(trimmed))
     {
       validMethod = trimmed;
+      return true;
+    }
+    return false;
+  }
+  public static bool ValidMethod(ref StringBuilder method){
+    if (!string.IsNullOrWhiteSpace(method.ToString()))
+    {
+      method.ToString().Trim();
       return true;
     }
     return false;

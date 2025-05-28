@@ -9,7 +9,7 @@ internal class SessionConfigBuilder
 
     public SessionConfigBuilder WithMethod(string? method)
     {
-        if (DataValidator.ValidMethod(method, out string? validMethod))
+        if (DataValidator.ValidMethod(method, out string? validMethod) && validMethod is not null)
             _sessionConfig.Method = validMethod;
 
         return this;
@@ -51,7 +51,7 @@ internal class SessionConfigBuilder
 
         try
         {
-            if (DataValidator.ValidHeaders(headers!, out Dictionary<string, string>? result))
+            if (DataValidator.ValidHeaders(combinedHeaders, out Dictionary<string, string>? result) && result is not null)
                 _sessionConfig.Headers = result;
             else
             {
